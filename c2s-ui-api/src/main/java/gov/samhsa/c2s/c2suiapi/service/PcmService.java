@@ -27,7 +27,7 @@ public interface PcmService {
 
     Object getRevokedConsent(String mrn, Long consentId, String format);
 
-    PageableDto<DetailedConsentDto> getConsents(String mrn, Integer page, Integer size);
+    PageableDto<DetailedConsentDto> getConsents(String mrn, Integer page, Integer size, Locale locale);
 
     void saveConsent(String mrn, ConsentDto consentDto, Locale locale);
 

@@ -98,10 +98,10 @@ public class PcmServiceImpl implements PcmService {
     }
 
     @Override
-    public PageableDto<DetailedConsentDto> getConsents(String mrn, Integer page, Integer size) {
+    public PageableDto<DetailedConsentDto> getConsents(String mrn, Integer page, Integer size, Locale locale) {
         //Assert mrn belong to current user
         enforceUserAuthService.assertCurrentUserAuthorizedForMrn(mrn);
-        return pcmClient.getConsents(mrn, page, size);
+        return pcmClient.getConsents(mrn, page, size, locale);
     }
 
     @Override

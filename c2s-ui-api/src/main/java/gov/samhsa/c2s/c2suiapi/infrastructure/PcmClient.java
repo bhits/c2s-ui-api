@@ -41,7 +41,8 @@ public interface PcmClient {
     @RequestMapping(value = "/patients/{patientId}/consents", method = RequestMethod.GET)
     PageableDto<DetailedConsentDto> getConsents(@PathVariable("patientId") String patientId,
                                                 @RequestParam(value = "page", required = false) Integer page,
-                                                @RequestParam(value = "size", required = false) Integer size);
+                                                @RequestParam(value = "size", required = false) Integer size,
+                                                @RequestHeader("Accept-Language") Locale locale);
 
     @RequestMapping(value = "/patients/{patientId}/consents/{consentId}", method = RequestMethod.GET)
     Object getConsent(@PathVariable("patientId") String patientId,
