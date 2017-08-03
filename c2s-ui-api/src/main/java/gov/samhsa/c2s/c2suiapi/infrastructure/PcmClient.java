@@ -94,7 +94,7 @@ public interface PcmClient {
                        @RequestParam(value = "revokedByPatient") boolean revokedByPatient);
 
     @RequestMapping(value = "/purposes", method = RequestMethod.GET)
-    List<PurposeDto> getPurposes();
+    List<PurposeDto> getPurposes( @RequestHeader("Accept-Language") Locale locale);
 
     @RequestMapping(value = "/consentAttestationTerm", method = RequestMethod.GET)
     ConsentTermDto getConsentAttestationTerm(@RequestParam(value = "id", required = false) Long id,

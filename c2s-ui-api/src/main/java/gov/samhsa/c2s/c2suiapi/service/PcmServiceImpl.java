@@ -184,8 +184,8 @@ public class PcmServiceImpl implements PcmService {
     }
 
     @Override
-    public List<PurposeDto> getPurposes() {
-        return pcmClient.getPurposes();
+    public List<PurposeDto> getPurposes(Locale locale) {
+        return pcmClient.getPurposes(locale);
     }
 
     @Override

@@ -122,8 +122,8 @@ public class PcmRestController {
     }
 
     @GetMapping("/purposes")
-    public List<PurposeDto> getPurposes() {
-        return pcmService.getPurposes();
+    public List<PurposeDto> getPurposes( @RequestHeader("Accept-Language") Locale locale) {
+        return pcmService.getPurposes(locale);
     }
 
     @GetMapping("/consentAttestationTerm")
