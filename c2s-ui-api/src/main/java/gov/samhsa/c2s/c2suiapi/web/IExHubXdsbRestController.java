@@ -19,7 +19,7 @@ public class IExHubXdsbRestController {
     }
 
     @GetMapping("/patients/{patientMrn}/health-information")
-    public PatientHealthDataDto getPatientDocumentsList(@PathVariable String patientMrn) {
+    public PatientHealthDataDto getPatientHealthData(@PathVariable String patientMrn) {
         return iExHubXdsbService.getPatientHealthData(patientMrn);
     }
 }

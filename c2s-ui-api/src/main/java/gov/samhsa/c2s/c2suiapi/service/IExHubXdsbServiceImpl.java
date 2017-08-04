@@ -141,6 +141,56 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .beid(null)
                 .build();
 
+        //Mock patient Section4
+        SectionDto sectionDto4 = SectionDto.builder()
+                .title("IMMUNIZATIONS")
+                .content("<div><span></span><table><thead><tr><th>Vaccine</th><th>Date</th><th>Status</th></tr></thead><tbody><tr><td><span></span>Influenza virus vaccine, IM</td><td>May 2012</td><td>Completed</td></tr><tr><td><span></span>Tetanus and diphtheria toxoids, IM</td><td>Apr 2012</td><td>Completed</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section5
+        SectionDto sectionDto5 = SectionDto.builder()
+                .title("CARE PLAN")
+                .content("<div><table><thead><tr><th>Planned Activity</th><th>Planned Date</th></tr></thead><tbody><tr><td>Consultation with Dr George Potomac for Asthma</td><td>20120820</td></tr><tr><td>Chest X-ray</td><td>20120826</td></tr><tr><td>Sputum Culture</td><td>20120820</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section6
+        SectionDto sectionDto6 = SectionDto.builder()
+                .title("REASON FOR REFERRAL")
+                .content("<div><p>Follow up with Dr George Potomac for Asthma</p></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section7
+        SectionDto sectionDto7 = SectionDto.builder()
+                .title("PROBLEMS")
+                .content("<div><span></span><ol><li>Opioid Abuse Disorder : Status - Active</li><li>Asthma : Status - Active</li><li>Depressive Disorder : Status - Active</li></ol></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section8
+        SectionDto sectionDto8 = SectionDto.builder()
+                .title("PROCEDURES")
+                .content("<div><table><thead><tr><th>Procedure</th><th>Date</th></tr></thead><tbody><tr><td><span>Chest X-Ray</span></td><td>8/7/2012</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
         //Mock patient cdAdocument
         CdaDocumentDto cdaDocumentDto = CdaDocumentDto.builder()
                 .date(LocalDate.of(2012, 9, 12))
@@ -150,7 +200,7 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .treatment(treatmentDto)
                 .authors(Arrays.asList(authorDto))
                 .title("Health Summary")
-                .sections(Arrays.asList(sectionDto1, sectionDto2, sectionDto3))
+                .sections(Arrays.asList(sectionDto1, sectionDto2, sectionDto3, sectionDto4, sectionDto5, sectionDto6, sectionDto7, sectionDto8))
                 .build();
 
         //Mock patient document
