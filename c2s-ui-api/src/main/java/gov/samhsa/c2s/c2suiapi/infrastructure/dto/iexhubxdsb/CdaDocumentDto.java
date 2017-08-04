@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CDAdocumentDto {
+public class CdaDocumentDto {
     private LocalDate date;
     private String type;
     private String id;

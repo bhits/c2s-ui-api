@@ -2,7 +2,7 @@ package gov.samhsa.c2s.c2suiapi.service;
 
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.AddressDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.AuthorDto;
-import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.CDAdocumentDto;
+import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.CdaDocumentDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.ContactInfoDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.DocumentDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.PatientHealthDataDto;
@@ -60,8 +60,15 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .build();
 
         //Mock patient provider
-        ProviderDto providerDto = ProviderDto.builder()
+        ProviderDto providerDto1 = ProviderDto.builder()
                 .providerName("Dr. Nancy Nightingale")
+                .organizationName("Community Health Clinic")
+                .softwareUse("Software used")
+                .nationalProviderId(null)
+                .contactInfo(null)
+                .build();
+        ProviderDto providerDto2 = ProviderDto.builder()
+                .providerName("Dr. Bob Daylight")
                 .organizationName("Community Health Clinic")
                 .softwareUse("Software used")
                 .nationalProviderId(null)
@@ -73,7 +80,7 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .service("Opioid Abuse Disorder\\nTreatment")
                 .serviceStartDate(LocalDate.of(2012, 8, 6))
                 .serviceEndDate(LocalDate.of(2012, 8, 13))
-                .providers(Arrays.asList(providerDto))
+                .providers(Arrays.asList(providerDto1, providerDto2))
                 .build();
 
         //Mock patient Author address
@@ -106,8 +113,8 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
 
         //Mock patient Section1
         SectionDto sectionDto1 = SectionDto.builder()
-                .title("MEDICATIONS")
-                .content("")
+                .title("ENCOUNTERS")
+                .content("<div><table><thead><tr><th>Encounter</th><th>Performer</th><th>Location</th><th>Date</th></tr></thead><tbody><tr><td><span></span> Pnuemonia</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20120806</td></tr><tr><td><span></span>Asthma</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20140116</td></tr></tbody></table></div>")
                 .contentMimeType("text/html")
                 .author(null)
                 .m_ClinicalStatements(null)
@@ -117,7 +124,7 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
         //Mock patient Section2
         SectionDto sectionDto2 = SectionDto.builder()
                 .title("HOSPITAL DISCHARGE MEDICATIONS")
-                .content("")
+                .content("<div><table><thead><tr><th>Medication</th><th>Directions</th><th>Start Date</th><th>Status</th><th>Indications</th><th>Fill Instructions</th></tr></thead><tbody><tr><td><span>120 ACTUAT Fluticasone propionate 0.11 MG/ACTUAT Metered Dose Inhaler</span></td><td><span>0.11 MG/ACTUAT Metered Dose Once Daily</span></td><td>20120813</td><td>Active</td><td>Bronchitis (32398004 SNOMED CT)</td><td><span>Generic Substitition Allowed</span></td></tr></tbody></table></div>")
                 .contentMimeType("text/html")
                 .author(null)
                 .m_ClinicalStatements(null)
@@ -127,7 +134,7 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
         //Mock patient Section3
         SectionDto sectionDto3 = SectionDto.builder()
                 .title("ALLERGIES, ADVERSE REACTIONS, ALERTS")
-                .content("")
+                .content("<div><table><thead><tr><th>Substance</th><th>Reaction</th><th>Severity</th><th>Status</th></tr></thead><tbody><tr><td>Penicillin G benzathine</td><td><span>Hives</span></td><td><span>Moderate to severe</span></td><td>Inactive</td></tr><tr><td>Codeine</td><td><span>Shortness of Breath</span></td><td><span>Moderate</span></td><td>Active</td></tr><tr><td>Aspirin</td><td><span>Hives</span></td><td><span>Mild to moderate</span></td><td>Active</td></tr></tbody></table></div>")
                 .contentMimeType("text/html")
                 .author(null)
                 .m_ClinicalStatements(null)
@@ -135,7 +142,7 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .build();
 
         //Mock patient cdAdocument
-        CDAdocumentDto cdAdocumentDto = CDAdocumentDto.builder()
+        CdaDocumentDto cdaDocumentDto = CdaDocumentDto.builder()
                 .date(LocalDate.of(2012, 9, 12))
                 .type("Summarization of Episode Note")
                 .id("Test CCDA^1.1.1.1.1.1.1.1.1")
@@ -148,11 +155,11 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
 
         //Mock patient document
         DocumentDto documentDto = DocumentDto.builder()
-                .CDAdocuments(Arrays.asList(cdAdocumentDto))
+                .cdaDocuments(Arrays.asList(cdaDocumentDto))
                 .build();
 
         return PatientHealthDataDto.builder()
-                .Documents(Arrays.asList(documentDto))
+                .documents(Arrays.asList(documentDto))
                 .build();
     }
 }
