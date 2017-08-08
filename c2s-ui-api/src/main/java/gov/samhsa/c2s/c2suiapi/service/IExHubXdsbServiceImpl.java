@@ -111,18 +111,18 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                         .build())
                 .build();
 
-        //Mock patient Section1
-        SectionDto sectionDto1 = SectionDto.builder()
-                .title("ENCOUNTERS")
-                .content("<div><table><thead><tr><th>Encounter</th><th>Performer</th><th>Location</th><th>Date</th></tr></thead><tbody><tr><td><span></span> Pnuemonia</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20120806</td></tr><tr><td><span></span>Asthma</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20140116</td></tr></tbody></table></div>")
+        //Mock patient Section0
+        SectionDto sectionDto0 = SectionDto.builder()
+                .title("MEDICATIONS")
+                .content("<div><table><thead><tr><th>Date</th><th>Prescription</th><th>Directions</th><th>Status</th><th>Indications</th><th>Fill Instructions</th></tr></thead><tbody><tr><td>2/12/2016</td><td><span>Methadone 1mg/ml SF</span></td><td>3 doses, 40 ml</td><td>Active</td><td>Opioid Abuse Disorder</td><td><span>Packaged doses</span></td></tr><tr><td>2/12/2016</td><td>Albuterol 0.09 MG/ACTUAT inhalant solution</td><td>0.09 MG/ACTUAT inhalant solution, 2 puffs once</td><td>Active</td><td>Asthma</td><td>Generic Substitition Allowed</td></tr><tr><td>2/15/2016</td><td>Methadone 1mg/ml SF</td><td>2 doses, 40 ml</td><td>Active</td><td>Opioid Abuse Disorder</td><td>Packaged doses</td></tr><tr><td>2/17/2016</td><td>Methadone 1mg/ml SF</td><td>3 doses, 40 ml</td><td>Active</td><td>Opioid Abuse Disorder</td><td>Packaged doses</td></tr><tr><td>2/29/2016</td><td>Methadone 1mg/ml SF</td><td>3 doses, 40 ml</td><td>Active</td><td>Opioid Abuse Disorder</td><td>Packaged doses</td></tr><tr><td>3/03/2016</td><td>Methadone 1mg/ml SF</td><td>3 doses, 40 ml</td><td>Active</td><td>Opioid Abuse Disorder</td><td>Packaged doses</td></tr><tr><td>3/03/2016</td><td>Bupropion Hydrochloride 100 MG [Wellbutrin] Tablets</td><td>30 doses, 100 mg tablets</td><td>Active</td><td>Depressive Disorder</td><td>Generic Substitition Allowed</td></tr></tbody></table></div>")
                 .contentMimeType("text/html")
                 .author(null)
                 .m_ClinicalStatements(null)
                 .beid(null)
                 .build();
 
-        //Mock patient Section2
-        SectionDto sectionDto2 = SectionDto.builder()
+        //Mock patient Section1
+        SectionDto sectionDto1 = SectionDto.builder()
                 .title("HOSPITAL DISCHARGE MEDICATIONS")
                 .content("<div><table><thead><tr><th>Medication</th><th>Directions</th><th>Start Date</th><th>Status</th><th>Indications</th><th>Fill Instructions</th></tr></thead><tbody><tr><td><span>120 ACTUAT Fluticasone propionate 0.11 MG/ACTUAT Metered Dose Inhaler</span></td><td><span>0.11 MG/ACTUAT Metered Dose Once Daily</span></td><td>20120813</td><td>Active</td><td>Bronchitis (32398004 SNOMED CT)</td><td><span>Generic Substitition Allowed</span></td></tr></tbody></table></div>")
                 .contentMimeType("text/html")
@@ -131,10 +131,20 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .beid(null)
                 .build();
 
-        //Mock patient Section3
-        SectionDto sectionDto3 = SectionDto.builder()
+        //Mock patient Section2
+        SectionDto sectionDto2 = SectionDto.builder()
                 .title("ALLERGIES, ADVERSE REACTIONS, ALERTS")
                 .content("<div><table><thead><tr><th>Substance</th><th>Reaction</th><th>Severity</th><th>Status</th></tr></thead><tbody><tr><td>Penicillin G benzathine</td><td><span>Hives</span></td><td><span>Moderate to severe</span></td><td>Inactive</td></tr><tr><td>Codeine</td><td><span>Shortness of Breath</span></td><td><span>Moderate</span></td><td>Active</td></tr><tr><td>Aspirin</td><td><span>Hives</span></td><td><span>Mild to moderate</span></td><td>Active</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section3
+        SectionDto sectionDto3 = SectionDto.builder()
+                .title("ENCOUNTERS")
+                .content("<div><table><thead><tr><th>Encounter</th><th>Performer</th><th>Location</th><th>Date</th></tr></thead><tbody><tr><td><span></span> Pnuemonia</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20120806</td></tr><tr><td><span></span>Asthma</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20140116</td></tr></tbody></table></div>")
                 .contentMimeType("text/html")
                 .author(null)
                 .m_ClinicalStatements(null)
@@ -191,6 +201,56 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .beid(null)
                 .build();
 
+        //Mock patient Section9
+        SectionDto sectionDto9 = SectionDto.builder()
+                .title("FUNCTIONAL STATUS")
+                .content("<div><table><thead><tr><th>Functional Condition</th><th>Effective Dates</th><th>Condition Status</th></tr></thead><tbody><tr><td><span>Dependence on cane</span></td><td>2008</td><td>Active</td></tr><tr><td><span>Memory impairment</span></td><td>2008</td><td>Active</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section10
+        SectionDto sectionDto10 = SectionDto.builder()
+                .title("RESULTS")
+                .content("<div><table><tbody><tr><td>LABORATORY INFORMATION</td></tr><tr><td>Chemistries and drug levels</td></tr><tr><td><span>HGB (M 13-18 g/dl; F 12-16 g/dl)</span></td><td>13.2</td></tr><tr><td><span>WBC (4.3-10.8 10+3/ul)</span></td><td>6.7</td></tr><tr><td><span>PLT (135-145 meq/l)</span></td><td>123 (L)</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section11
+        SectionDto sectionDto11 = SectionDto.builder()
+                .title("SOCIAL HISTORY")
+                .content("<div><table><thead><tr><th>Social History Element</th><th>Description</th><th>Effective Dates</th></tr></thead><tbody><tr><td><span></span> smoking</td><td>Former Smoker (1 pack per day</td><td>20050501 to 20110227</td></tr><tr><td><span></span> smoking</td><td>Current Everyday Smoker 2 packs per day</td><td>20110227 - today</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section12
+        SectionDto sectionDto12 = SectionDto.builder()
+                .title("VITAL SIGNS")
+                .content("<div><table><thead><tr><th>Date / Time: </th><th>Nov 1, 2011</th><th>August 6, 2012</th></tr></thead><tbody><tr><th>Height</th><td><span>69 inches</span></td><td><span>69 inches</span></td></tr><tr><th>Weight</th><td><span>189 lbs</span></td><td><span>194 lbs</span></td></tr><tr><th>Blood Pressure</th><td><span>132/86 mmHg</span></td><td><span>145/88 mmHg</span></td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section13
+        SectionDto sectionDto13 = SectionDto.builder()
+                .title("HOSPITAL DISCHARGE INSTRUCTIONS")
+                .content("<div><span>Ms. Share, you have been seen by Dr. Nightingale at Local Community Hospital from August 8th until August 13th 2014. You are currently being discharged from Local Community Hospital. Dr. Nightingale has provided the following instructions to you at this time; should you have any questions please contact a member of your healthcare team prior to discharge. If you have left the hospital and have questions, please contact Dr. Nightingale at 555-555-1002. Instructions:</span><ol><li>Take all medications as prescribed.</li><li>Please monitor your peak flows. If your peak flows drop to 50% of normal, call my office immediately or return to the Emergency Room.</li><li>If you experience any of the following symptoms, call my office immediately or return to the Emergency Room:                        <ol><li>Shortness of Breath</li><li>Dizziness or Light-headedness</li><li>Fever, chills, or diffuse body aches</li><li>Pain or redness at the site of any previous intravenous catheter</li><li>Any other unusual problem</li></ol></li></ol></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
         //Mock patient cdAdocument
         CdaDocumentDto cdaDocumentDto = CdaDocumentDto.builder()
                 .date(LocalDate.of(2012, 9, 12))
@@ -200,7 +260,11 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .treatment(treatmentDto)
                 .authors(Arrays.asList(authorDto))
                 .title("Health Summary")
-                .sections(Arrays.asList(sectionDto1, sectionDto2, sectionDto3, sectionDto4, sectionDto5, sectionDto6, sectionDto7, sectionDto8))
+                .sections(Arrays.asList(
+                        sectionDto0, sectionDto1, sectionDto2, sectionDto3,
+                        sectionDto4, sectionDto5, sectionDto6, sectionDto7,
+                        sectionDto8, sectionDto9, sectionDto10, sectionDto11,
+                        sectionDto12, sectionDto13))
                 .build();
 
         //Mock patient document
