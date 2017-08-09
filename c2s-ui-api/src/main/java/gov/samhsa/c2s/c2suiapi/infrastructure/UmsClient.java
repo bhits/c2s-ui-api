@@ -24,7 +24,7 @@ public interface UmsClient {
     Object activateUser(@Valid @RequestBody UserActivationRequestDto userActivationRequest,
                         @RequestHeader(X_FORWARDED_PROTO) String xForwardedProto,
                         @RequestHeader(X_FORWARDED_HOST) String xForwardedHost,
-                        @RequestHeader(X_FORWARDED_PORT) int xForwardedPort);
+                        @RequestHeader(X_FORWARDED_PORT) String xForwardedPort);
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
     UmsUserDto getUser(@PathVariable("userId") Long userId);

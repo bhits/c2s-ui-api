@@ -4,12 +4,12 @@ import gov.samhsa.c2s.c2suiapi.infrastructure.UmsClient;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.BaseUmsLookupDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.UmsUserDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.UserActivationRequestDto;
+import gov.samhsa.c2s.c2suiapi.infrastructure.dto.UserProfileSelfServiceEditDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.UserVerificationRequestDto;
 import gov.samhsa.c2s.c2suiapi.service.dto.FullProfileResponse;
 import gov.samhsa.c2s.c2suiapi.service.dto.JwtTokenKey;
 import gov.samhsa.c2s.c2suiapi.service.dto.LimitedProfileResponse;
 import gov.samhsa.c2s.c2suiapi.service.dto.UserDto;
-import gov.samhsa.c2s.c2suiapi.infrastructure.dto.UserProfileSelfServiceEditDto;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class UmsServiceImpl implements UmsService {
     }
 
     @Override
-    public Object activateUser(UserActivationRequestDto userActivationRequest, String xForwardedProto, String xForwardedHost, int xForwardedPort) {
+    public Object activateUser(UserActivationRequestDto userActivationRequest, String xForwardedProto, String xForwardedHost, String xForwardedPort) {
         return umsClient.activateUser(userActivationRequest, xForwardedProto, xForwardedHost, xForwardedPort);
     }
 
@@ -120,10 +120,10 @@ public class UmsServiceImpl implements UmsService {
      * Builds a FullProfileResponse object from a UserDto
      * <p>
      * NOTE: The FullProfileResponse object is built using lombok's Builder method
-     * @see lombok.Builder
      *
      * @param userDto - The UserDto from which to build the FullProfileResponse object
      * @return The built FullProfileResponse object
+     * @see lombok.Builder
      */
     private FullProfileResponse buildFullProfileResponse(UserDto userDto) {
         //Get system supported Locales
