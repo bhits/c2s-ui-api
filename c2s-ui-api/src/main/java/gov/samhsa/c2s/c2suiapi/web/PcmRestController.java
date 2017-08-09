@@ -90,8 +90,8 @@ public class PcmRestController {
     @PostMapping("/patients/{mrn}/consents")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveConsent(@PathVariable String mrn,
-                            @Valid @RequestBody ConsentDto consentDto, @RequestHeader("Accept-Language") Locale locale) {
-        pcmService.saveConsent(mrn, consentDto, locale);
+                            @Valid @RequestBody ConsentDto consentDto) {
+        pcmService.saveConsent(mrn, consentDto);
     }
 
     @DeleteMapping("/patients/{mrn}/consents/{consentId}")
@@ -121,18 +121,18 @@ public class PcmRestController {
     }
 
     @GetMapping("/purposes")
-    public List<PurposeDto> getPurposes() {
+    public List<PurposeDto> getPurposes( ) {
         return pcmService.getPurposes();
     }
 
     @GetMapping("/consentAttestationTerm")
-    public ConsentTermDto getConsentAttestationTerm(@RequestParam(value = "id", required = false) Long id, @RequestHeader("Accept-Language") Locale locale) {
-        return pcmService.getConsentAttestationTerm(id, locale);
+    public ConsentTermDto getConsentAttestationTerm(@RequestParam(value = "id", required = false) Long id) {
+        return pcmService.getConsentAttestationTerm(id);
     }
 
     @GetMapping("/consentRevocationTerm")
-    public ConsentTermDto getConsentRevocationTerm(@RequestParam(value = "id", required = false) Long id, @RequestHeader("Accept-Language") Locale locale) {
-        return pcmService.getConsentRevocationTerm(id, locale);
+    public ConsentTermDto getConsentRevocationTerm(@RequestParam(value = "id", required = false) Long id) {
+        return pcmService.getConsentRevocationTerm(id);
     }
 
     @GetMapping("/patients/{mrn}/consent-activities")
