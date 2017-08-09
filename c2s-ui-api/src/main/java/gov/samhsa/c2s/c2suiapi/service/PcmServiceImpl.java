@@ -98,21 +98,21 @@ public class PcmServiceImpl implements PcmService {
     }
 
     @Override
-    public PageableDto<DetailedConsentDto> getConsents(String mrn, Integer page, Integer size, Locale locale) {
+    public PageableDto<DetailedConsentDto> getConsents(String mrn, Integer page, Integer size) {
         //Assert mrn belong to current user
         enforceUserAuthService.assertCurrentUserAuthorizedForMrn(mrn);
-        return pcmClient.getConsents(mrn, page, size, locale);
+        return pcmClient.getConsents(mrn, page, size, LocaleContextHolder.getLocale());
     }
 
     @Override
-    public void saveConsent(String mrn, ConsentDto consentDto, Locale locale) {
+    public void saveConsent(String mrn, ConsentDto consentDto) {
         try {
             //Assert mrn belong to current user
             enforceUserAuthService.assertCurrentUserAuthorizedForMrn(mrn);
 
             // Get current user authId
             String createdBy = jwtTokenExtractor.getValueByKey(JwtTokenKey.USER_ID);
-            pcmClient.saveConsent(mrn, consentDto, locale, createdBy, CREATED_BY_PATIENT);
+            pcmClient.saveConsent(mrn, consentDto, LocaleContextHolder.getLocale(), createdBy, CREATED_BY_PATIENT);
         } catch (HystrixRuntimeException hystrixErr) {
             Throwable causedBy = hystrixErr.getCause();
 
@@ -184,18 +184,18 @@ public class PcmServiceImpl implements PcmService {
     }
 
     @Override
-    public List<PurposeDto> getPurposes(Locale locale) {
-        return pcmClient.getPurposes(locale);
+    public List<PurposeDto> getPurposes() {
+        return pcmClient.getPurposes(LocaleContextHolder.getLocale());
     }
 
     @Override
-    public ConsentTermDto getConsentAttestationTerm(Long id, Locale locale) {
-        return pcmClient.getConsentAttestationTerm(id, locale);
+    public ConsentTermDto getConsentAttestationTerm(Long id) {
+        return pcmClient.getConsentAttestationTerm(id, LocaleContextHolder.getLocale());
     }
 
     @Override
-    public ConsentTermDto getConsentRevocationTerm(Long id, Locale locale) {
-        return pcmClient.getConsentRevocationTerm(id, locale);
+    public ConsentTermDto getConsentRevocationTerm(Long id) {
+        return pcmClient.getConsentRevocationTerm(id, LocaleContextHolder.getLocale());
     }
 
     @Override
