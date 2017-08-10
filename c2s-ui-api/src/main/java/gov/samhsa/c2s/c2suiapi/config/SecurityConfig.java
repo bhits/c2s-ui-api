@@ -60,6 +60,7 @@ public class SecurityConfig {
 
                         .antMatchers(HttpMethod.GET, "/iexhub-xdsb/**").access(hasScopes("c2sUiApi.read"))
 
+                        .antMatchers(HttpMethod.POST, "/uaa/login").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().denyAll();
             }

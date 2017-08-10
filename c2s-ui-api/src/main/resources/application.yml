@@ -11,6 +11,13 @@ security:
   oauth2:
     client:
       client-id: c2s-ui-api
+c2s:
+  c2s-ui-api:
+    oauth2:
+      base-url: http://localhost/uaa
+      client:
+        client-id: c2s-ui
+        client-secret: changeit
 ---
 spring.profiles: standalone-ssl
 spring:

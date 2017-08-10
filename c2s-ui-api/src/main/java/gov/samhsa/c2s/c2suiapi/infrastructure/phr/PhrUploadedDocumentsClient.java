@@ -2,7 +2,7 @@ package gov.samhsa.c2s.c2suiapi.infrastructure.phr;
 
 import feign.Headers;
 import feign.Param;
-import gov.samhsa.c2s.c2suiapi.config.multipartSupport.MultipartSupportConfig;
+import gov.samhsa.c2s.c2suiapi.config.feignsupport.MultipartSupportConfig;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
