@@ -29,7 +29,7 @@ public interface PcmService {
 
     PageableDto<DetailedConsentDto> getConsents(String mrn, Integer page, Integer size);
 
-    void saveConsent(String mrn, ConsentDto consentDto, Locale locale);
+    void saveConsent(String mrn, ConsentDto consentDto);
 
     void deleteConsent(String mrn, Long consentId);
 
@@ -41,9 +41,9 @@ public interface PcmService {
 
     List<PurposeDto> getPurposes();
 
-    ConsentTermDto getConsentAttestationTerm(Long id, Locale locale);
+    ConsentTermDto getConsentAttestationTerm(Long id);
 
-    ConsentTermDto getConsentRevocationTerm(Long id, Locale locale);
+    ConsentTermDto getConsentRevocationTerm(Long id);
 
     PageableDto<ConsentActivityDto> getConsentActivities(String mrn, Integer page, Integer size);
 }
