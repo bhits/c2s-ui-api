@@ -45,7 +45,6 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.PUT, "/ums/users/*").access(hasScopes("c2sUiApi.write"))
                         .antMatchers(HttpMethod.GET, "/ums/userCreationLookupInfo").access(hasScopes("c2sUiApi.read"))
                         .antMatchers(HttpMethod.PUT, "/ums/self-service/users/*").access(hasScopes("c2sUiApi.write"))
-
                         .antMatchers(HttpMethod.GET, "/ums/user-avatars/user/*/avatar").access(hasScopes("c2sUiApi.read"))
                         .antMatchers(HttpMethod.POST, "/ums/user-avatars/user/*/avatar").access(hasScopes("c2sUiApi.write"))
                         .antMatchers(HttpMethod.DELETE, "/ums/user-avatars/user/*/avatar").access(hasScopes("c2sUiApi.write"))
@@ -59,6 +58,9 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.DELETE, "/phr/uploadedDocuments/**").access(hasScopes("c2sUiApi.write"))
                         .antMatchers(HttpMethod.PUT, "/phr/uploadedDocuments/**").access(hasScopes("c2sUiApi.write"))
 
+                        .antMatchers(HttpMethod.GET, "/iexhub-xdsb/**").access(hasScopes("c2sUiApi.read"))
+
+                        .antMatchers(HttpMethod.POST, "/uaa/login").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().denyAll();
             }
