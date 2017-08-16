@@ -15,13 +15,13 @@ import org.springframework.context.annotation.Configuration;
 public class HttpClientConfiguration {
 
     @Autowired(required = false)
- private HttpClient httpClient;
+    private HttpClient httpClient;
 
-        @ConditionalOnMissingBean
- 		public Client feignClient() {
-            if (httpClient != null) {
-                    return new ApacheHttpClient(httpClient);
-                }
-            return new ApacheHttpClient();
+    @ConditionalOnMissingBean
+    public Client feignClient() {
+        if (httpClient != null) {
+            return new ApacheHttpClient(httpClient);
         }
+        return new ApacheHttpClient();
+    }
 }
