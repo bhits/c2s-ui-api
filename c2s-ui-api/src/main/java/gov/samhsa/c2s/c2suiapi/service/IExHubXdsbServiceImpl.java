@@ -74,6 +74,20 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .nationalProviderId(null)
                 .contactInfo(null)
                 .build();
+        ProviderDto providerDto3 = ProviderDto.builder()
+                .providerName("Dr. Tyler Dental")
+                .organizationName("Community Health Clinic")
+                .softwareUse("Software used")
+                .nationalProviderId(null)
+                .contactInfo(null)
+                .build();
+        ProviderDto providerDto4 = ProviderDto.builder()
+                .providerName("Dr. Potomac Dental")
+                .organizationName("Community Health Clinic")
+                .softwareUse("Software used")
+                .nationalProviderId(null)
+                .contactInfo(null)
+                .build();
 
         //Mock patient treatment
         TreatmentDto treatmentDto = TreatmentDto.builder()
@@ -81,6 +95,13 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .serviceStartDate(LocalDate.of(2012, 8, 6))
                 .serviceEndDate(LocalDate.of(2012, 8, 13))
                 .providers(Arrays.asList(providerDto1, providerDto2))
+                .build();
+
+        TreatmentDto treatmentDto2 = TreatmentDto.builder()
+                .service("Opioid Abuse Disorder\\nTreatment")
+                .serviceStartDate(LocalDate.of(2014, 6, 6))
+                .serviceEndDate(LocalDate.of(2014, 7, 13))
+                .providers(Arrays.asList(providerDto3, providerDto4))
                 .build();
 
         //Mock patient Author address
@@ -102,6 +123,17 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
         //Mock patient Author
         AuthorDto authorDto = AuthorDto.builder()
                 .providerName("Nancy Nightingale")
+                .organizationName("Get Well Clinic")
+                .softwareUse("Software used")
+                .nationalProviderId(null)
+                .contactInfo(ContactInfoDto.builder()
+                        .address(authorAddress)
+                        .telecommunications(Arrays.asList(authorTelecommunication))
+                        .build())
+                .build();
+
+        AuthorDto authorDto2 = AuthorDto.builder()
+                .providerName("Tyler Dental")
                 .organizationName("Get Well Clinic")
                 .softwareUse("Software used")
                 .nationalProviderId(null)
@@ -251,8 +283,38 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                 .beid(null)
                 .build();
 
-        //Mock patient cdAdocument
-        CdaDocumentDto cdaDocumentDto = CdaDocumentDto.builder()
+        //Mock patient Section14
+        SectionDto sectionDto14 = SectionDto.builder()
+                .title("CARE PLAN")
+                .content("<div><table><thead><tr><th>Planned Activity</th><th>Planned Date</th></tr></thead><tbody><tr><td>Consultation with Dr George Potomac for Asthma</td><td>20120820</td></tr><tr><td>Chest X-ray</td><td>20120826</td></tr><tr><td>Sputum Culture</td><td>20120820</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section15
+        SectionDto sectionDto15 = SectionDto.builder()
+                .title("ENCOUNTERS")
+                .content("<div><table><thead><tr><th>Encounter</th><th>Performer</th><th>Location</th><th>Date</th></tr></thead><tbody><tr><td><span></span> Pnuemonia</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20120806</td></tr><tr><td><span></span>Asthma</td><td>Dr Nancy Nightingale</td><td>Community Health Clinic</td><td>20140116</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient Section16
+        SectionDto sectionDto16 = SectionDto.builder()
+                .title("PROCEDURES")
+                .content("<div><table><thead><tr><th>Procedure</th><th>Date</th></tr></thead><tbody><tr><td><span>Chest X-Ray</span></td><td>8/7/2012</td></tr></tbody></table></div>")
+                .contentMimeType("text/html")
+                .author(null)
+                .m_ClinicalStatements(null)
+                .beid(null)
+                .build();
+
+        //Mock patient cdADocuments
+        CdaDocumentDto cdaDocumentDto1 = CdaDocumentDto.builder()
                 .date(LocalDate.of(2012, 9, 12))
                 .type("Summarization of Episode Note")
                 .id("Test CCDA^1.1.1.1.1.1.1.1.1")
@@ -267,9 +329,21 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
                         sectionDto12, sectionDto13))
                 .build();
 
+        CdaDocumentDto cdaDocumentDto2 = CdaDocumentDto.builder()
+                .date(LocalDate.of(2014, 2, 20))
+                .type("Summarization of Episode Note")
+                .id("Test CCDA^2.2.2.2.2.2.2.2.2")
+                .targetPatient(targetPatient)
+                .treatment(treatmentDto2)
+                .authors(Arrays.asList(authorDto2))
+                .title("Health Summary")
+                .sections(Arrays.asList(
+                        sectionDto14, sectionDto15, sectionDto16))
+                .build();
+
         //Mock patient document
         DocumentDto documentDto = DocumentDto.builder()
-                .cdaDocuments(Arrays.asList(cdaDocumentDto))
+                .cdaDocuments(Arrays.asList(cdaDocumentDto1, cdaDocumentDto2))
                 .build();
 
         return PatientHealthDataDto.builder()
