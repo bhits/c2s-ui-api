@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient("iexhub-xdsb")
 public interface IExHubXdsbClient {
     @RequestMapping(value = "/patients/{patientId}/health-information", method = RequestMethod.GET)
-    Object getPatientHealthDataFromHIE(@PathVariable("patientId") String patientId);
+    String getPatientHealthDataFromHIE(@PathVariable("patientId") String patientId);
 }
