@@ -45,7 +45,7 @@ public class UaaServiceImpl implements UaaService {
             return uaaClient.getTokenUsingPasswordGrant(requestParams);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            String errorMessage = e.getCause().getMessage();
+            String errorMessage = e.getMessage();
 
             if(errorMessage.contains(BAD_CREDENTIAL_ERROR_MESSAGE)){
                 throw new BadCredentialsException();
