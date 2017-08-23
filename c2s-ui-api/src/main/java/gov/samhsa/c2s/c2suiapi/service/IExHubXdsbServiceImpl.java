@@ -25,6 +25,7 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
     @Override
     public PatientHealthDataDto getPatientHealthData(String patientMrn) {
         try {
+            //patientId is MRN, not Patient.id
             String jsonResponse = iexhubXdsbClient.getPatientHealthDataFromHIE(patientMrn);
             return modelMapper.map(jsonResponse, PatientHealthDataDto.class);
         }
