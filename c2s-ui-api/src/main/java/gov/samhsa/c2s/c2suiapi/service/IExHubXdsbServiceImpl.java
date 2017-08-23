@@ -3,7 +3,6 @@ package gov.samhsa.c2s.c2suiapi.service;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import feign.FeignException;
 import gov.samhsa.c2s.c2suiapi.infrastructure.IExHubXdsbClient;
-import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.PatientHealthDataDto;
 import gov.samhsa.c2s.c2suiapi.service.exception.IExhubXdsbClientException;
 import gov.samhsa.c2s.c2suiapi.service.exception.phr.NoDocumentsFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +22,13 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
     }
 
     @Override
-    public PatientHealthDataDto getPatientHealthData(String patientMrn) {
+    public Object getPatientHealthData(String patientMrn) {
         log.info("Fetching Patient Health Data from IExHubXDSB...");
         try {
             //patientId is MRN, not Patient.id
-            String jsonResponse = iexhubXdsbClient.getPatientHealthDataFromHIE(patientMrn);
+            Object jsonResponse = iexhubXdsbClient.getPatientHealthDataFromHIE(patientMrn);
             log.info("Got response from IExHubXDSB...");
-            return modelMapper.map(jsonResponse, PatientHealthDataDto.class);
+            return jsonResponse;
         }
         catch (HystrixRuntimeException hystrixErr) {
             Throwable causedBy = hystrixErr.getCause();
