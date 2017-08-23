@@ -24,9 +24,11 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
 
     @Override
     public PatientHealthDataDto getPatientHealthData(String patientMrn) {
+        log.info("Fetching Patient Health Data from IExHubXDSB...");
         try {
             //patientId is MRN, not Patient.id
             String jsonResponse = iexhubXdsbClient.getPatientHealthDataFromHIE(patientMrn);
+            log.info("Got response from IExHubXDSB...");
             return modelMapper.map(jsonResponse, PatientHealthDataDto.class);
         }
         catch (HystrixRuntimeException hystrixErr) {
