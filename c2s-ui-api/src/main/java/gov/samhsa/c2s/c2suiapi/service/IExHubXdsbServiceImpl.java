@@ -1,6 +1,5 @@
 package gov.samhsa.c2s.c2suiapi.service;
 
-import com.netflix.hystrix.exception.HystrixRuntimeException;
 import feign.FeignException;
 import gov.samhsa.c2s.c2suiapi.infrastructure.IExHubXdsbClient;
 import gov.samhsa.c2s.c2suiapi.service.exception.IExhubXdsbClientException;
@@ -30,23 +29,13 @@ public class IExHubXdsbServiceImpl implements IExHubXdsbService {
             log.info("Got response from IExHubXDSB...");
             return jsonResponse;
         }
-        catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if (!(causedBy instanceof FeignException)) {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new IExhubXdsbClientException("An unknown error occurred while attempting to communicate with IExHubXdsb service");
-            }
-
-            int causedByStatus = ((FeignException) causedBy).status();
-
-            switch (causedByStatus) {
-                case 404:
-                    log.debug("IExHubXdsb client returned a 404 - NOT FOUND status, indicating no medical documents were found for the specified patientMrn", causedBy);
-                    throw new NoDocumentsFoundException("No medical documents found for the specified patient");
-                default:
-                    log.error("IExHubXdsb client returned an unexpected instance of FeignException", causedBy);
-                    throw new IExhubXdsbClientException("An unknown error occurred while attempting to communicate with IExHubXdsb");
+        catch (FeignException fe){
+            if(fe.status() == 404){
+                log.error("IExHubXdsb client returned a 404 - NOT FOUND status, indicating no medical documents were found for the specified patientMrn", fe);
+                throw new NoDocumentsFoundException("No medical documents found for the specified patient");
+            } else {
+                log.error("IExHubXdsb client returned an unexpected instance of FeignException", fe);
+                throw new IExhubXdsbClientException("An unknown error occurred while attempting to communicate with IExHubXdsb");
             }
         }
     }
