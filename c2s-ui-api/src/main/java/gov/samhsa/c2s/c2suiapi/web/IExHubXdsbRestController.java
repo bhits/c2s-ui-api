@@ -1,6 +1,5 @@
 package gov.samhsa.c2s.c2suiapi.web;
 
-import gov.samhsa.c2s.c2suiapi.infrastructure.dto.iexhubxdsb.PatientHealthDataDto;
 import gov.samhsa.c2s.c2suiapi.service.IExHubXdsbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,7 @@ public class IExHubXdsbRestController {
     }
 
     @GetMapping("/patients/{patientMrn}/health-information")
-    public PatientHealthDataDto getPatientHealthData(@PathVariable String patientMrn) {
+    public Object getPatientHealthData(@PathVariable String patientMrn) {
         return iExHubXdsbService.getPatientHealthData(patientMrn);
     }
 }
