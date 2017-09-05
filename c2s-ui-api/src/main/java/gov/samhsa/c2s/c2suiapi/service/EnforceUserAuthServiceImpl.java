@@ -10,6 +10,7 @@ import gov.samhsa.c2s.c2suiapi.service.exception.UserUnauthorizedException;
 import gov.samhsa.c2s.c2suiapi.service.exception.checkedexceptions.AbstractUserAuthIdException;
 import gov.samhsa.c2s.c2suiapi.service.exception.checkedexceptions.UserAuthIdNotFoundException;
 import gov.samhsa.c2s.c2suiapi.service.exception.checkedexceptions.UserAuthIdVerificationException;
+import gov.samhsa.c2s.c2suiapi.service.exception.ums.UmsClientInterfaceException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,32 +69,21 @@ public class EnforceUserAuthServiceImpl implements EnforceUserAuthService {
         }
     }
 
-
     private UserDto getUserByAuthId(String userAuthId) throws UserAuthIdNotFoundException, UserAuthIdVerificationException {
         UserDto userDto;
-
         try{
             userDto = modelMapper.map(umsClient.getUserByAuthId(userAuthId), UserDto.class);
-        } catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if(!(causedBy instanceof FeignException)){
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new UserAuthIdVerificationException("An unknown error occurred while attempting to communicate with UMS service");
-            }
-
-            int causedByStatus = ((FeignException) causedBy).status();
-
-            switch (causedByStatus){
+        } catch (FeignException fe) {
+            int causedByStatus = fe.status();
+            switch(causedByStatus) {
                 case 404:
-                    log.debug("UMS client returned a 404 - NOT FOUND status, indicating no user was found for the specified userAuthId", causedBy);
+                    log.debug("UMS client returned a 404 - NOT FOUND status, indicating no user was found for the specified userAuthId", fe);
                     throw new UserAuthIdNotFoundException("No user found for the specified user auth id");
                 default:
-                    log.error("UMS client returned an unexpected instance of FeignException", causedBy);
-                    throw new UserAuthIdVerificationException("An unknown error occurred while attempting to communicate with UMS service");
+                    log.error("UMS client returned an unexpected instance of FeignException", fe);
+                    throw new UmsClientInterfaceException("An unknown error occurred while attempting to communicate with UMS service");
             }
         }
-
         return userDto;
     }
 }

@@ -69,22 +69,15 @@ public class PhrUploadedDocumentsServiceImpl implements PhrUploadedDocumentsServ
 
         try {
             uploadedDocuments = addSampleDocsToPatientUploadedDocumentList(patientMrn);
-        } catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if (!(causedBy instanceof FeignException)) {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
-            }
-
-            int causedByStatus = ((FeignException) causedBy).status();
+        } catch (FeignException fe) {
+            int causedByStatus = fe.status();
 
             switch (causedByStatus) {
                 case 404:
-                    log.debug("PHR client returned a 404 - NOT FOUND status, indicating no documents were found for the specified patientMrn", causedBy);
+                    log.debug("PHR client returned a 404 - NOT FOUND status, indicating no documents were found for the specified patientMrn", fe);
                     throw new NoDocumentsFoundException("No documents found for the specified patient");
                 default:
-                    log.error("PHR client returned an unexpected instance of FeignException", causedBy);
+                    log.error("PHR client returned an unexpected instance of FeignException", fe);
                     throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
             }
         }
@@ -101,26 +94,19 @@ public class PhrUploadedDocumentsServiceImpl implements PhrUploadedDocumentsServ
 
         try {
             returnedDocument = phrUploadedDocumentsClient.getPatientDocumentByDocId(patientMrn, id);
-        } catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if (!(causedBy instanceof FeignException)) {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
-            }
-
-            int causedByStatus = ((FeignException) causedBy).status();
+        } catch (FeignException fe) {
+            int causedByStatus = fe.status();
 
             switch (causedByStatus) {
                 case 404:
                     log.debug("PHR client returned a 404 - NOT FOUND status, indicating either no documents were found for the specified patientMrn," +
-                            "or the document requested does not belong to the specified patientMrn", causedBy);
+                            "or the document requested does not belong to the specified patientMrn", fe);
                     throw new NoDocumentsFoundException("No document found with the specified document ID");
                 case 400:
-                    log.error("PHR client returned a 400 - BAD REQUEST status, indicating invalid input was passed to PHR client", causedBy);
+                    log.error("PHR client returned a 400 - BAD REQUEST status, indicating invalid input was passed to PHR client", fe);
                     throw new InvalidInputException("Invalid input was passed to PHR client");
                 default:
-                    log.error("PHR client returned an unexpected instance of FeignException", causedBy);
+                    log.error("PHR client returned an unexpected instance of FeignException", fe);
                     throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
             }
         }
@@ -137,31 +123,24 @@ public class PhrUploadedDocumentsServiceImpl implements PhrUploadedDocumentsServ
 
         try {
             returnedSavedDocument = phrUploadedDocumentsClient.saveNewPatientDocument(patientMrn, file, documentName, description, documentTypeCodeId);
-        } catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if (!(causedBy instanceof FeignException)) {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
-            }
-
-            int causedByStatus = ((FeignException) causedBy).status();
+        } catch (FeignException fe) {
+            int causedByStatus = fe.status();
 
             switch (causedByStatus) {
                 case 400:
-                    log.error("PHR client returned a 400 - BAD REQUEST status, indicating invalid input was passed to PHR client", causedBy);
+                    log.error("PHR client returned a 400 - BAD REQUEST status, indicating invalid input was passed to PHR client", fe);
                     throw new InvalidInputException("Invalid input was passed to PHR client");
                 case 412:
-                    log.info("Document is invalid");
+                    log.info("Document is invalid", fe);
                     throw new DocumentInvalidException();
                 case 409:
-                    log.info("The specified patient already has a document with the same document name", causedBy);
+                    log.info("The specified patient already has a document with the same document name", fe);
                     throw new DocumentNameExistsException("The specified patient already has a document with the same document name");
                 case 500:
-                    log.error("An error occurred while attempting to save a new document", causedBy);
+                    log.error("An error occurred while attempting to save a new document", fe);
                     throw new DocumentSaveException("An error occurred while attempting to save a new document");
                 default:
-                    log.error("PHR client returned an unexpected instance of FeignException", causedBy);
+                    log.error("PHR client returned an unexpected instance of FeignException", fe);
                     throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
             }
         }
@@ -176,28 +155,21 @@ public class PhrUploadedDocumentsServiceImpl implements PhrUploadedDocumentsServ
 
         try {
             phrUploadedDocumentsClient.deletePatientDocument(patientMrn, id);
-        } catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if (!(causedBy instanceof FeignException)) {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
-            }
-
-            int causedByStatus = ((FeignException) causedBy).status();
+        } catch (FeignException fe) {
+            int causedByStatus = fe.status();
 
             switch (causedByStatus) {
                 case 400:
-                    log.error("PHR client returned a 400 - BAD REQUEST status, indicating invalid input was passed to PHR client", causedBy);
+                    log.error("PHR client returned a 400 - BAD REQUEST status, indicating invalid input was passed to PHR client", fe);
                     throw new InvalidInputException("Invalid input was passed to PHR client");
                 case 404:
-                    log.error("No documents were found with the specified document ID", causedBy);
+                    log.error("No documents were found with the specified document ID", fe);
                     throw new NoDocumentsFoundException("No document found with the specified document ID");
                 case 500:
-                    log.error("An error occurred while attempting to delete a document", causedBy);
+                    log.error("An error occurred while attempting to delete a document", fe);
                     throw new DocumentDeleteException("An error occurred while attempting to delete a document");
                 default:
-                    log.error("PHR client returned an unexpected instance of FeignException", causedBy);
+                    log.error("PHR client returned an unexpected instance of FeignException", fe);
                     throw new PhrClientInterfaceException("An unknown error occurred while attempting to communicate with PHR service");
             }
         }
