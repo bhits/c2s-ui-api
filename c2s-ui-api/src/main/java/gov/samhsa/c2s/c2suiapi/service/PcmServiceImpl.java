@@ -113,17 +113,13 @@ public class PcmServiceImpl implements PcmService {
             // Get current user authId
             String createdBy = jwtTokenExtractor.getValueByKey(JwtTokenKey.USER_ID);
             pcmClient.saveConsent(mrn, consentDto, LocaleContextHolder.getLocale(), createdBy, CREATED_BY_PATIENT);
-        } catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if (!(causedBy instanceof FeignException)) {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
-            }
-
-            if (((FeignException) causedBy).status() == 409) {
-                log.info("The specified patient already has this consent", causedBy);
+        } catch (FeignException fe) {
+            if (fe.status() == 409) {
+                log.error("The specified patient already has this consent", fe);
                 throw new DuplicateConsentException("Already created same consent.");
+            } else {
+                log.error("Unexpected instance of FeignException has occurred", fe);
+                throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
             }
         }
     }
@@ -154,7 +150,6 @@ public class PcmServiceImpl implements PcmService {
         try {
             //Assert mrn belong to current user
             enforceUserAuthService.assertCurrentUserAuthorizedForMrn(mrn);
-
             // Get current user authId
             String attestedBy = jwtTokenExtractor.getValueByKey(JwtTokenKey.USER_ID);
             pcmClient.attestConsent(mrn, consentId, consentAttestationDto, attestedBy, ATTESTED_BY_PATIENT);
@@ -163,7 +158,7 @@ public class PcmServiceImpl implements PcmService {
                 log.error("Consent start date early than Signing date", fe);
                 throw new InvalidConsentSignDateException("Consent start date early than Signing date.");
             } else {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", fe);
+                log.error("Unexpected instance of FeignException has occurred", fe);
                 throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
             }
         }
