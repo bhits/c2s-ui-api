@@ -114,12 +114,14 @@ public class PcmServiceImpl implements PcmService {
             String createdBy = jwtTokenExtractor.getValueByKey(JwtTokenKey.USER_ID);
             pcmClient.saveConsent(mrn, consentDto, LocaleContextHolder.getLocale(), createdBy, CREATED_BY_PATIENT);
         } catch (FeignException fe) {
-            if (fe.status() == 409) {
-                log.error("The specified patient already has this consent", fe);
-                throw new DuplicateConsentException("Already created same consent.");
-            } else {
-                log.error("Unexpected instance of FeignException has occurred", fe);
-                throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
+            int causedByStatus = fe.status();
+            switch(causedByStatus) {
+                case 409:
+                    log.error("The specified patient already has this consent", fe);
+                    throw new DuplicateConsentException("Already created same consent.");
+                default:
+                    log.error("Unexpected instance of FeignException has occurred", fe);
+                    throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
             }
         }
     }
@@ -154,12 +156,14 @@ public class PcmServiceImpl implements PcmService {
             String attestedBy = jwtTokenExtractor.getValueByKey(JwtTokenKey.USER_ID);
             pcmClient.attestConsent(mrn, consentId, consentAttestationDto, attestedBy, ATTESTED_BY_PATIENT);
         } catch (FeignException fe) {
-            if (fe.status() == 400) {
-                log.error("Consent start date early than Signing date", fe);
-                throw new InvalidConsentSignDateException("Consent start date early than Signing date.");
-            } else {
-                log.error("Unexpected instance of FeignException has occurred", fe);
-                throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
+            int causedByStatus = fe.status();
+            switch(causedByStatus) {
+                case 400:
+                    log.error("Consent start date early than Signing date", fe);
+                    throw new InvalidConsentSignDateException("Consent start date early than Signing date.");
+                default:
+                    log.error("Unexpected instance of FeignException has occurred", fe);
+                    throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
             }
         }
     }
