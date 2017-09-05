@@ -158,17 +158,13 @@ public class PcmServiceImpl implements PcmService {
             // Get current user authId
             String attestedBy = jwtTokenExtractor.getValueByKey(JwtTokenKey.USER_ID);
             pcmClient.attestConsent(mrn, consentId, consentAttestationDto, attestedBy, ATTESTED_BY_PATIENT);
-        } catch (HystrixRuntimeException hystrixErr) {
-            Throwable causedBy = hystrixErr.getCause();
-
-            if (!(causedBy instanceof FeignException)) {
-                log.error("Unexpected instance of HystrixRuntimeException has occurred", hystrixErr);
-                throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
-            }
-
-            if (((FeignException) causedBy).status() == 400) {
-                log.info("Consent start date early than Signing date.", causedBy);
+        } catch (FeignException fe) {
+            if (fe.status() == 400) {
+                log.error("Consent start date early than Signing date", fe);
                 throw new InvalidConsentSignDateException("Consent start date early than Signing date.");
+            } else {
+                log.error("Unexpected instance of HystrixRuntimeException has occurred", fe);
+                throw new PcmInterfaceException("An unknown error occurred while attempting to communicate with PCM service");
             }
         }
     }
