@@ -13,14 +13,14 @@ security:
       client-id: c2s-ui-api
 c2s:
   c2s-ui:
-    patient-permissions:
+    features:
       health-information-enabled: false
 
   c2s-ui-api:
     # Please configure valid config below to connect to UAA server
     # Configure base-url, client-id, client-secret per environment
     oauth2:
-      base-url: http://localhost/uaa
+      base-url: http://localhost:9999/uaa
       client:
         client-id: c2s-ui
         client-secret: changeit

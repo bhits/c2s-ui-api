@@ -14,10 +14,10 @@ public class C2sUiProperties {
 
     @NotNull
     @Valid
-    private PatientPermissions patientPermissions;
+    private Features features;
 
     @Data
-    public static class PatientPermissions {
+    public static class Features {
         private boolean healthInformationEnabled = false;
     }
 }
