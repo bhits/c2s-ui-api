@@ -13,7 +13,7 @@ security:
       client-id: c2s-ui-api
 c2s:
   c2s-ui:
-    patient-permissions:
+    features:
       health-information-enabled: false
 
   c2s-ui-api:
