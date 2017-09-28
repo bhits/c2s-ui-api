@@ -20,7 +20,7 @@ c2s:
     # Please configure valid config below to connect to UAA server
     # Configure base-url, client-id, client-secret per environment
     oauth2:
-      base-url: http://localhost:9999/uaa
+      base-url: http://localhost/uaa
       client:
         client-id: c2s-ui
         client-secret: changeit
