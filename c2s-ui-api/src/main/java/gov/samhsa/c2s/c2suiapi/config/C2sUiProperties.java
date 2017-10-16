@@ -18,6 +18,9 @@ public class C2sUiProperties {
 
     @Data
     public static class Features {
-        private boolean healthInformationEnabled = false;
+        private boolean healthInformationEnabled;
+        private boolean demoDisclaimerEnabled;
     }
+
+
 }
