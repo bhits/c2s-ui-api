@@ -15,6 +15,7 @@ c2s:
   c2s-ui:
     features:
       health-information-enabled: false
+      demo-disclaimer-enabled: false
 
   c2s-ui-api:
     # Please configure valid config below to connect to UAA server
