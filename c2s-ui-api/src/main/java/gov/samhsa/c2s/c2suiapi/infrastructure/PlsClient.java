@@ -1,5 +1,6 @@
 package gov.samhsa.c2s.c2suiapi.infrastructure;
 
+import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PlsProviderSearchResultDto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public interface PlsClient {
     }
 
     @RequestMapping(value = "/providers/search/query", method = RequestMethod.GET)
-    Object searchProviders(
+    PlsProviderSearchResultDto searchProviders(
             @RequestParam(value = "state", required = false) String state,
             @RequestParam(value = "city", required = false) String city,
             @RequestParam(value = "zipcode", required = false) String zipCode,
@@ -35,4 +36,7 @@ public interface PlsClient {
             @RequestHeader(X_FORWARDED_HOST) String xForwardedHost,
             @RequestHeader(X_FORWARDED_PREFIX) String xForwardedPrefix,
             @RequestHeader(X_FORWARDED_PORT) String xForwardedPort);
+
+    @RequestMapping(value = "/providers/search/activeProviderStateCodes", method = RequestMethod.GET)
+    Object getActiveProviderStateCodes();
 }
