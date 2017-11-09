@@ -8,4 +8,6 @@ public interface PlsService {
                            String size, String sort, String projection,
                            String xForwardedProto, String xForwardedHost,
                            String xForwardedPrefix, String xForwardedPort);
+
+    Object getStateCodes();
 }
