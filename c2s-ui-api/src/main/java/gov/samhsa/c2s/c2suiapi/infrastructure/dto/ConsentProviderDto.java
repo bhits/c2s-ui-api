@@ -14,7 +14,7 @@ public class ConsentProviderDto {
     protected Long id;
     @Valid
     @NotEmpty
-    protected Set<IdentifierDto> identifiers = new HashSet<>();
+    protected Set<CareTeamMemberIdentifierDto> identifiers = new HashSet<>();
     @Valid
     protected AddressDto address;
     protected Boolean deletable;

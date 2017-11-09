@@ -6,9 +6,9 @@ import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentProviderDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentRevocationDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentTermDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.DetailedConsentDto;
-import gov.samhsa.c2s.c2suiapi.infrastructure.dto.IdentifiersDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PageableDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PcmConsentActivityDto;
+import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ProviderDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PurposeDto;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.HttpStatus;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 @FeignClient("pcm")
 public interface PcmClient {
@@ -32,7 +33,7 @@ public interface PcmClient {
 
     @RequestMapping(value = "/patients/{patientId}/providers", method = RequestMethod.POST)
     void saveProviders(@PathVariable("patientId") String patientId,
-                       @Valid @RequestBody IdentifiersDto providerIdentifiersDto);
+                       @Valid @RequestBody Set<ProviderDto> providers);
 
     @RequestMapping(value = "/patients/{patientId}/providers/{providerId}", method = RequestMethod.DELETE)
     void deleteProvider(@PathVariable("patientId") String patientId,
@@ -94,7 +95,7 @@ public interface PcmClient {
                        @RequestParam(value = "revokedByPatient") boolean revokedByPatient);
 
     @RequestMapping(value = "/purposes", method = RequestMethod.GET)
-    List<PurposeDto> getPurposes( @RequestHeader("Accept-Language") Locale locale);
+    List<PurposeDto> getPurposes(@RequestHeader("Accept-Language") Locale locale);
 
     @RequestMapping(value = "/consentAttestationTerm", method = RequestMethod.GET)
     ConsentTermDto getConsentAttestationTerm(@RequestParam(value = "id", required = false) Long id,
