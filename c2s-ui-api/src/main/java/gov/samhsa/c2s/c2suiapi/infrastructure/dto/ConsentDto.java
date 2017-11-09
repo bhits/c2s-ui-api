@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @ScriptAssert(
@@ -22,7 +23,10 @@ public class ConsentDto {
     private LocalDate endDate;
     @Valid
     @NotNull
-    private IdentifiersDto fromProviders;
+    private Set<ProviderDto> fromProviders;
+    @Valid
+    @NotNull
+    private Set<ProviderDto> toProviders;
     @Valid
     @NotNull
     private IdentifiersDto sharePurposes;
@@ -32,7 +36,4 @@ public class ConsentDto {
     @NotNull
     @PresentOrFuture
     private LocalDate startDate;
-    @Valid
-    @NotNull
-    private IdentifiersDto toProviders;
 }
