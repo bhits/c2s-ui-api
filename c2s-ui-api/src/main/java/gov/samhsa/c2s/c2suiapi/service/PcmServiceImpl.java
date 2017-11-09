@@ -1,6 +1,5 @@
 package gov.samhsa.c2s.c2suiapi.service;
 
-import com.netflix.hystrix.exception.HystrixRuntimeException;
 import feign.FeignException;
 import gov.samhsa.c2s.c2suiapi.infrastructure.PcmClient;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentAttestationDto;
@@ -9,9 +8,9 @@ import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentProviderDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentRevocationDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentTermDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.DetailedConsentDto;
-import gov.samhsa.c2s.c2suiapi.infrastructure.dto.IdentifiersDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PageableDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PcmConsentActivityDto;
+import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ProviderDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PurposeDto;
 import gov.samhsa.c2s.c2suiapi.service.dto.ConsentActivityDto;
 import gov.samhsa.c2s.c2suiapi.service.dto.JwtTokenKey;
@@ -30,6 +29,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -63,10 +63,10 @@ public class PcmServiceImpl implements PcmService {
     }
 
     @Override
-    public void saveProviders(String mrn, IdentifiersDto providerIdentifiersDto) {
+    public void saveProviders(String mrn, Set<ProviderDto> providers) {
         //Assert mrn belong to current user
         enforceUserAuthService.assertCurrentUserAuthorizedForMrn(mrn);
-        pcmClient.saveProviders(mrn, providerIdentifiersDto);
+        pcmClient.saveProviders(mrn, providers);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class PcmServiceImpl implements PcmService {
             pcmClient.saveConsent(mrn, consentDto, LocaleContextHolder.getLocale(), createdBy, CREATED_BY_PATIENT);
         } catch (FeignException fe) {
             int causedByStatus = fe.status();
-            switch(causedByStatus) {
+            switch (causedByStatus) {
                 case 409:
                     log.error("The specified patient already has this consent", fe);
                     throw new DuplicateConsentException("Already created same consent.");
@@ -157,7 +157,7 @@ public class PcmServiceImpl implements PcmService {
             pcmClient.attestConsent(mrn, consentId, consentAttestationDto, attestedBy, ATTESTED_BY_PATIENT);
         } catch (FeignException fe) {
             int causedByStatus = fe.status();
-            switch(causedByStatus) {
+            switch (causedByStatus) {
                 case 400:
                     log.error("Consent start date early than Signing date", fe);
                     throw new InvalidConsentSignDateException("Consent start date early than Signing date.");

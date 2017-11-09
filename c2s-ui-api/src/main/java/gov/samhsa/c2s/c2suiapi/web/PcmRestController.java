@@ -8,6 +8,7 @@ import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentTermDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.DetailedConsentDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.IdentifiersDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PageableDto;
+import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ProviderDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PurposeDto;
 import gov.samhsa.c2s.c2suiapi.service.PcmService;
 import gov.samhsa.c2s.c2suiapi.service.dto.ConsentActivityDto;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/pcm")
@@ -48,8 +50,8 @@ public class PcmRestController {
     @PostMapping("/patients/{mrn}/providers")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveProviders(@PathVariable String mrn,
-                              @Valid @RequestBody IdentifiersDto providerIdentifiersDto) {
-        pcmService.saveProviders(mrn, providerIdentifiersDto);
+                              @Valid @RequestBody Set<ProviderDto> providers) {
+        pcmService.saveProviders(mrn, providers);
     }
 
     @DeleteMapping("/patients/{mrn}/providers/{providerId}")

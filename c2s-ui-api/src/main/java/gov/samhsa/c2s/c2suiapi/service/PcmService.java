@@ -6,18 +6,18 @@ import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentProviderDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentRevocationDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ConsentTermDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.DetailedConsentDto;
-import gov.samhsa.c2s.c2suiapi.infrastructure.dto.IdentifiersDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PageableDto;
+import gov.samhsa.c2s.c2suiapi.infrastructure.dto.ProviderDto;
 import gov.samhsa.c2s.c2suiapi.infrastructure.dto.PurposeDto;
 import gov.samhsa.c2s.c2suiapi.service.dto.ConsentActivityDto;
 
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 
 public interface PcmService {
     List<ConsentProviderDto> getProviders(String mrn);
 
-    void saveProviders(String mrn, IdentifiersDto providerIdentifiersDto);
+    void saveProviders(String mrn, Set<ProviderDto> providers);
 
     void deleteProvider(String mrn, Long providerId);
 
